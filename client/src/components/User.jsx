@@ -1,4 +1,4 @@
-import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
+import { PersonOutlineOutlined } from "@mui/icons-material";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 
 /** Contains top part of the post */
-const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
+const User = ({ friendId, name, subtitle, userPicturePath }) => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const { _id } = useSelector((state) => state.user);
@@ -24,18 +24,19 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
 	const isSelf = _id === friendId;
 
 	const patchFriend = async () => {
-		const response = await fetch(
-			`http://localhost:6001/users/${_id}/${friendId}`,
-			{
-				method: "PATCH",
-				headers: {
-					Authorization: `Bearer ${token}`,
-					"Content-Type": "application/json",
-				},
-			}
-		);
-		const data = await response.json();
-		dispatch(setFriends({ friends: data }));
+		// const response = await fetch(
+		// 	`http://localhost:6001/users/${_id}/${friendId}`,
+		// 	{
+		// 		method: "PATCH",
+		// 		headers: {
+		// 			Authorization: `Bearer ${token}`,
+		// 			"Content-Type": "application/json",
+		// 		},
+		// 	}
+		// );
+		// const data = await response.json();
+		// dispatch(setFriends({ friends: data }));
+		navigate(`/profile/${friendId}`);
 	};
 
 	return (
@@ -78,7 +79,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
 						p: "0.6rem",
 					}}
 				>
-					{isFriend ? (
+					{/* {isFriend ? (
 						<PersonRemoveOutlined
 							sx={{ color: primaryDark }}
 						/>
@@ -86,11 +87,19 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
 						<PersonAddOutlined
 							sx={{ color: primaryDark }}
 						/>
-					)}
+					)} */}
+					<PersonOutlineOutlined
+						sx={{
+							"&:hover": {
+								color: palette.primary.main,
+								cursor: "pointer",
+							},
+						}}
+					/>
 				</IconButton>
 			)}
 		</FlexBetween>
 	);
 };
 
-export default Friend;
+export default User;
