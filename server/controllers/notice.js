@@ -8,3 +8,11 @@ export const getAllNotice = async (req, res) => {
         res.status(500).json({message: 'Something went wrong! Try again!'})
     }
 }
+
+export const createNotice = async (req, res) => {
+    try {
+        
+    } catch(error) {
+        res.status(500).json({message: 'Something went wrong! Try again!'})
+    }
+}
