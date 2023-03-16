@@ -70,7 +70,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
 				</Box>
 				{/**Friend button */}
 			</FlexBetween>
-			{!isSelf && (
+			{/* {!isSelf && (
 				<IconButton
 					onClick={() => patchFriend()}
 					sx={{
@@ -86,9 +86,9 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
 						<PersonAddOutlined
 							sx={{ color: primaryDark }}
 						/>
-					)}
-				</IconButton>
-			)}
+					)} */}
+			{/* </IconButton> */}
+			{/* )} */}
 		</FlexBetween>
 	);
 };

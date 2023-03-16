@@ -15,9 +15,10 @@ export const getUser = async (req, res) => {
 export const getAllUsers = async (req, res) => {
     try {
         const users = await User.find()
+        console.log("Users: ", users)
         res.status(200).json(users)
-    } catch(error) {
-        res.status(500).json({message: 'Something went wrong! Please try again'})
+    } catch (error) {
+        res.status(500).json({ message: 'Something went wrong! Please try again' })
     }
 }
 
@@ -25,9 +26,9 @@ export const getUserFriends = async (req, res) => {
     try {
         const { id } = req.params
         const user = await User.findById(id)
-        
+
         const friends = await Promise.all(
-            user.friends.map( (id) => User.findById(id) )
+            user.friends.map((id) => User.findById(id))
         )
         const formattedFriends = friends.map(
             ({ _id, firstName, lastName, occupation, location, picturePath }) => {
@@ -59,7 +60,7 @@ export const addRemoveFriend = async (req, res) => {
         await friend.save()
 
         const friends = await Promise.all(
-            user.friends.map( (id) => User.findById(id) )
+            user.friends.map((id) => User.findById(id))
         )
         const formattedFriends = friends.map(
             ({ _id, firstName, lastName, occupation, location, picturePath }) => {

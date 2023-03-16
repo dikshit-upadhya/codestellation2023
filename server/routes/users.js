@@ -7,7 +7,7 @@ const router = express.Router()
 /* READ */
 // /:id means if the frontend is sending a particular id we 
 // can grab it using this syntax aka query string
-router.get('/users/all', getAllUsers)
+router.get('/all', verifyToken, getAllUsers)
 router.get("/:id", verifyToken, getUser)
 router.get("/:id/friends", verifyToken, getUserFriends)
 
