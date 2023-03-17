@@ -13,42 +13,14 @@ import { VerifiedUser } from "@mui/icons-material";
 
 export const mainListItems = (
 	<React.Fragment>
-		<ListItemButton>
-			<ListItemIcon>
-				<VerifiedUser />
-			</ListItemIcon>
-			<ListItemText primary="Approve Users" />
-		</ListItemButton>
-		<ListItemButton>
-			<ListItemIcon>
-				<AssignmentIcon />
-			</ListItemIcon>
-			<ListItemText primary="Approve Notice" />
-		</ListItemButton>
-		<ListItemButton>
-			<ListItemIcon>
-				<PeopleIcon />
-			</ListItemIcon>
-			<ListItemText primary="Customers" />
-		</ListItemButton>
-		<ListItemButton>
-			<ListItemIcon>
-				<BarChartIcon />
-			</ListItemIcon>
-			<ListItemText primary="Reports" />
-		</ListItemButton>
-		<ListItemButton>
-			<ListItemIcon>
-				<LayersIcon />
-			</ListItemIcon>
-			<ListItemText primary="Integrations" />
-		</ListItemButton>
+		
+		
 	</React.Fragment>
 );
 
 export const secondaryListItems = (
 	<React.Fragment>
-		<ListSubheader component="div" inset>
+		{/* <ListSubheader component="div" inset>
 			Saved reports
 		</ListSubheader>
 		<ListItemButton>
@@ -68,6 +40,6 @@ export const secondaryListItems = (
 				<AssignmentIcon />
 			</ListItemIcon>
 			<ListItemText primary="Year-end sale" />
-		</ListItemButton>
+		</ListItemButton> */}
 	</React.Fragment>
 );

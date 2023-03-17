@@ -15,6 +15,7 @@ const noticeSchema = mongoose.Schema({
     }, 
     verified: {
         type: Boolean,
+        required: true, 
         default: false
     }
 }, {

@@ -1,4 +1,5 @@
-import Notice from "../models/notice";
+import Notice from "../models/Notice.js";
+import User from "../models/User.js";
 
 export const getAllNotice = async (req, res) => {
     try {
@@ -11,10 +12,11 @@ export const getAllNotice = async (req, res) => {
 
 export const createNotice = async (req, res) => {
     try {
+        const user = await User.findById(req.user.id)
         const newNotice = new Notice({
-            createdBy: req.user._id, 
+            createdBy: user._id, 
             title: req.body.title, 
-            description: req.body.description, 
+            description: req.body.description,
         })
         const savedNotice = await newNotice.save()
         res.status(201).send(savedNotice)

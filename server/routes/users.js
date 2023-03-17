@@ -1,6 +1,7 @@
 import express from "express"
 import { getUser, getUserFriends, addRemoveFriend, getAllUsers, getAllUnverifiedUsers, verifyUser } from "../controllers/users.js"
-import { acceptedRoles, verifyToken } from "../middleware/auth.js"
+import {  verifyToken } from "../middleware/auth.js"
+import { acceptedRoles } from "../controllers/auth.js"
 
 const router = express.Router()
 
@@ -8,13 +9,15 @@ const router = express.Router()
 // /:id means if the frontend is sending a particular id we 
 // can grab it using this syntax aka query string
 router.get('/all', verifyToken, getAllUsers)
+router.patch("/verify-user/:userId", verifyToken, acceptedRoles(['ADMIN']), verifyUser)
+router.get('/unverified', verifyToken, acceptedRoles(['ADMIN']), getAllUnverifiedUsers)
 router.get("/:id", verifyToken, getUser)
 router.get("/:id/friends", verifyToken, getUserFriends)
 
 
-router.get('/unverified', verifyToken, acceptedRoles(['ADMIN']), getAllUnverifiedUsers)
+
 /* UPDATE */
 router.patch("/:id/:friendId", verifyToken, addRemoveFriend)
-router.patch("/verify-user/:userId", verifyToken, acceptedRoles(['ADMIN']), verifyUser)
+
 
 export default router;

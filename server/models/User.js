@@ -55,8 +55,6 @@ const UserSchema = new mongoose.Schema(
     }, {timestamps: true}
 )
 
-//so when u create a mongoose model, you want to create the schema first, and then pass it into 
-//mongoose.model and then pass it into User to export
 const User = mongoose.model("User", UserSchema)
 
 export default User

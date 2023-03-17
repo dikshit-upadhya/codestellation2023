@@ -108,7 +108,7 @@ const Navbar = () => {
 						)}
 					</IconButton>
 
-					<IconButton onClick={() => navigate("")}>
+					<IconButton onClick={() => navigate("/notifications")}>
 						<Notifications
 							sx={{
 								color: dark,

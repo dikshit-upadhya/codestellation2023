@@ -62,3 +62,16 @@ export const login = async (req,res) => {
         res.status(500).json({ error: error.message })
     }
 }
+
+export const acceptedRoles = (validRoles) => async (req, res, next) => {
+	try {
+        console.log(validRoles, req.user)
+        const user = await User.findById(req.user.id)
+		if (validRoles.includes(user.userType)) {
+			return next()
+		}
+		res.status(403).json({message: 'This action is forbidden for you'})
+	} catch (err) {
+		res.status(500).json({message:'Something went wrong! Please try again!'})
+	}
+}
