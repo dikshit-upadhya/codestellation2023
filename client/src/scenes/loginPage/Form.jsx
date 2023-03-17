@@ -42,6 +42,7 @@ const initialValuesRegister = {
 	firstName: "",
 	lastName: "",
 	email: "",
+	type: '',
 	password: "",
 	location: "",
 	occupation: "",
@@ -63,7 +64,7 @@ const Form = () => {
 	const isLogin = pageType === "login";
 	const isRegister = pageType === "register";
 
-	const handleSelectType = (event: SelectChangeEvent) => {
+	const handleSelectType = (event) => {
 		setType(event.target.value);
 	};
 
