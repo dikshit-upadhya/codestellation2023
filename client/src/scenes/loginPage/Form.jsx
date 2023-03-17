@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "state";
 import Dropzone from "react-dropzone";
 import FlexBetween from "components/FlexBetween";
+import swal from "sweetalert";
 
 // form validator
 // .string() ensures that it is a string
@@ -94,6 +95,11 @@ const Form = () => {
 		);
 		const savedUser = await savedUserResponse.json();
 		const errorStatus = await savedUserResponse.status;
+		console.log(savedUser)
+			if(savedUser.message) {
+				swal('Oops!', `Something wasn't right, ${savedUser.message}` , 'info')
+				return 
+			}
 
 		if (savedUser) {
 			if (savedUser.error) {
@@ -116,6 +122,9 @@ const Form = () => {
 			}
 		);
 		const loggedIn = await loggedInResponse.json();
+		if(loggedIn.message) {
+			swal('Oops!', loggedIn.message,'info')
+		}
 		onSubmitProps.resetForm();
 		if (loggedIn) {
 			//coming from redux. we are setting the user and state to be used throughout the app

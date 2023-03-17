@@ -65,7 +65,7 @@ app.use("/notices", noticeRoutes)
 
 /* Mongoose Setup*/
 const PORT = process.env.PORT || 6001
-mongoose.connect("mongodb+srv://diksupadhya1234:xXaILs3lNFlOsbg0@cluster0.7oqejjf.mongodb.net/test", {
+mongoose.connect("mongodb://localhost:27017/test", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }).then(() => {

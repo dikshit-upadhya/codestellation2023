@@ -86,7 +86,12 @@ const MyPostWidget = ({ picturePath }) => {
             swal('Perfect!', 'The notice was created succesfully. It will be visible once it is verified by the Admin', 'success')
             console.log(res)
         }).catch(err => {
-            swal('Oops', 'Something went wrong', 'info')
+            if(err.message == "Request failed with status code 403") {
+                swal('Oops', 'You are not allowed to do this action', 'info')
+            } else {
+                swal('Oops', 'Something went wrong!', 'info')
+            }
+            
         })
 
         setTitle("")

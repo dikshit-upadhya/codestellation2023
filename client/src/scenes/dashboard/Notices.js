@@ -11,11 +11,13 @@ import axios from "axios";
 import swal from 'sweetalert'
 import { useSelector } from "react-redux";
 import { Button, Typography } from "@mui/material";
+import { useNavigate } from "react-router";
 
 
 export default function Orders() {
 	const [data, setData] = React.useState()
 	const token = useSelector((state) => state.token);
+	const [change, setChange] = React.useState(1)
 
 	React.useEffect(() => {
 		axios({
@@ -31,18 +33,41 @@ export default function Orders() {
 		})
 			
 	}, [])
-
-	const handleApprove = () => {
+	React.useEffect(() => {
 		axios({
-			url: ''
+			url: "http://localhost:6001/notices/all",
+			method: 'get', 
+			headers: { Authorization: `Bearer ${token}` },
+		}).then(res => {
+			console.log(res)
+			setData(res.data)
+		}).catch(err => {
+			swal(err.message)
+			console.log(err)
+		})
+			
+	}, [change])
+
+	const handleApprove = (id) => () => {
+		axios({
+			url: `http://localhost:6001/notices/approve/${id}`,
+			method: 'patch', 
+			headers: {Authorization: `Bearer ${token}`}
+		}).then(res => {
+			setChange(prev => prev + 1)
+			swal('Great Job!', "The notice has been approved and will show up in the main notifications page", 'success')
+		}).catch(err => {
+			swal('Oops!', 'Something went wrong', 'info')
 		})
 	}
 
+	const navigate = useNavigate()
+
 	return (
 		<React.Fragment>
-            <Button sx={{marginBottom: '20px'}} variant="contained">+ CREATE NOTICE</Button>
+            <Button onClick={() => navigate('/notifications')} sx={{marginBottom: '20px'}} variant="contained">+ CREATE NOTICE</Button>
 			<Title>Recent Notice Requests</Title>
-			<Table size="small">
+ 			<Table size="small">
 				<TableHead>
 					<TableRow>
 						<TableCell>Sl. NO.</TableCell>
@@ -63,7 +88,7 @@ export default function Orders() {
 							<TableCell>
 								{row.verified ? 'VERIFIED' : 'UNVERIFIED'}
 							</TableCell>
-							<TableCell align="right"><Button variant="contained" color="success" onClick={handleApprove} >APPROVE NOTICE </Button></TableCell>
+							<TableCell align="right">{row.verified ? 'APPROVED' :<Button variant="contained" color="success" onClick={handleApprove(row._id)} >APPROVE NOTICE </Button>}</TableCell>
 						</TableRow>
 					))}
 				</TableBody>
