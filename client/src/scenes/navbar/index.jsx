@@ -19,11 +19,13 @@ import {
 	Help,
 	Menu,
 	Close,
+	Dashboard,
 } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { setMode, setLogout } from "state";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "components/FlexBetween";
+import swal from "sweetalert";
 
 const Navbar = () => {
 	// value to determine if we want to open up the mobile menu when in its in a small screen
@@ -43,6 +45,19 @@ const Navbar = () => {
 	const alt = theme.palette.background.alt;
 
 	const fullName = `${user.firstName} ${user.lastName}`;
+
+	const handleOnClickToDashboard = () => {
+		console.log(user);
+		if (user.userType === "ADMIN") {
+			navigate("/dashboard");
+		} else {
+			swal(
+				"Oops!",
+				"You are not allowed to visit the Dashboard.",
+				"error"
+			);
+		}
+	};
 
 	return (
 		<FlexBetween padding="1rem 6%" backgroundColor={alt}>
@@ -91,6 +106,28 @@ const Navbar = () => {
 								}}
 							/>
 						)}
+					</IconButton>
+
+					<IconButton onClick={() => navigate("")}>
+						<Notifications
+							sx={{
+								color: dark,
+								fontsize: "25px",
+							}}
+						/>
+					</IconButton>
+
+					<IconButton
+						onClick={() => {
+							handleOnClickToDashboard();
+						}}
+					>
+						<Dashboard
+							sx={{
+								color: dark,
+								fontsize: "25px",
+							}}
+						/>
 					</IconButton>
 
 					{/**
