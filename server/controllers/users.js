@@ -22,6 +22,23 @@ export const getAllUsers = async (req, res) => {
     }
 }
 
+export const getAllUnverifiedUsers = async (req, res) => {
+    try {
+        const users = await User.find({verified: false})
+        res.status(200).json(users)
+    } catch(error) {
+        res.status(500).json({message: 'Something went wrong! Please try again!'})
+    }
+}
+
+export const verifyUser = async (req, res) => {
+    try {
+
+    } catch(error) {
+        
+    }
+}
+
 export const getUserFriends = async (req, res) => {
     try {
         const { id } = req.params
