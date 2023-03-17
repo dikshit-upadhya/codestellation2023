@@ -8,7 +8,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "./theme";
 import Dashboard from "scenes/dashboard/Dashboard";
-
+import Notices from './scenes/notices'
 
 function App() {
   const mode = useSelector((state) => state.mode);
@@ -26,6 +26,7 @@ function App() {
             {/* <Route path="/home" element={<HomePage />} /> */}
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile/:userId" element={isAuth ? <ProfilePage /> : <Navigate to="/" />} />
+            <Route path="/notifications" element={<Notices />} />
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

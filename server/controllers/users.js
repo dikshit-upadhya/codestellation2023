@@ -33,9 +33,16 @@ export const getAllUnverifiedUsers = async (req, res) => {
 
 export const verifyUser = async (req, res) => {
     try {
-
+        const id = req.params.userId
+        const user = await User.findById(id)
+        if(!user) {
+            return res.status(404).json({message: 'User not found'})
+        }
+        user.verified = true
+        const savedUser = await user.save()
+        res.status(200).json(savedUser)
     } catch(error) {
-        
+        res.status(500).json({message: 'Something went wrong'})
     }
 }
 

@@ -10,36 +10,16 @@ import { LineAxisOutlined } from "@mui/icons-material";
 import axios from "axios";
 import swal from 'sweetalert'
 import { useSelector } from "react-redux";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-	return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const rows = [
-	createData(
-		0,
-		"16 Mar, 2019",
-		"Elvis Presley",
-		"Tupelo, MS",
-		"VISA ⠀•••• 3719",
-		312.44
-	),
-];
-
-function preventDefault(event) {
-	event.preventDefault();
-}
 
 export default function Orders() {
 	const [data, setData] = React.useState()
 	const token = useSelector((state) => state.token);
-	const [change, setChange] = React.useState(1)
 
 	React.useEffect(() => {
 		axios({
-			url: "http://localhost:6001/users/unverified",
+			url: "http://localhost:6001/notices/all",
 			method: 'get', 
 			headers: { Authorization: `Bearer ${token}` },
 		}).then(res => {
@@ -50,36 +30,27 @@ export default function Orders() {
 			console.log(err)
 		})
 			
-	}, [change])
+	}, [])
 
-	const handleApprove = (id) => () => {
+	const handleApprove = () => {
 		axios({
-			url: `http://localhost:6001/users/verify-user/${id}`,
-			method: 'patch', 
-			headers: { Authorization: `Bearer ${token}` }
-		}).then(res => {
-			swal("Great Job!", "This user has been approved successfully!", 'success')
-			console.log(res)
-			setChange(prev => prev + 1)
-		}).catch(err => {
-			swal(err.message)
-			console.log(err
-				)
+			url: ''
 		})
 	}
 
 	return (
 		<React.Fragment>
-			<Title>Recent New Users</Title>
+            <Button sx={{marginBottom: '20px'}} variant="contained">+ CREATE NOTICE</Button>
+			<Title>Recent Notice Requests</Title>
 			<Table size="small">
 				<TableHead>
 					<TableRow>
 						<TableCell>Sl. NO.</TableCell>
-						<TableCell>Name</TableCell>
-						<TableCell>Role</TableCell>
+						<TableCell>Notice Title</TableCell>
+						<TableCell>Notice Description</TableCell>
 						<TableCell>Status</TableCell>
 						<TableCell align="right">
-							Approve
+							Actions
 						</TableCell>
 					</TableRow>
 				</TableHead>
@@ -87,12 +58,12 @@ export default function Orders() {
 					{data && data?.map((row, index) => (
 						<TableRow key={row.id}>
 							<TableCell>{index + 1}</TableCell>
-							<TableCell>{row.firstName + " " + row.lastName}</TableCell>
-							<TableCell>{row.userType}</TableCell>
+							<TableCell>{row.title}</TableCell>
+							<TableCell sx={{maxWidth:'300px'}} ><Typography>{row.description}</Typography></TableCell>
 							<TableCell>
-								{'UNVERIFIED'}
+								{row.verified ? 'VERIFIED' : 'UNVERIFIED'}
 							</TableCell>
-							<TableCell align="right"><Button variant="contained" onClick={handleApprove(row._id)} >APPROVE</Button></TableCell>
+							<TableCell align="right"><Button variant="contained" color="success" onClick={handleApprove} >APPROVE NOTICE </Button></TableCell>
 						</TableRow>
 					))}
 				</TableBody>
