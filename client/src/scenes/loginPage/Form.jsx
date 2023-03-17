@@ -30,7 +30,6 @@ const registerSchema = yup.object().shape({
 	password: yup.string().required("required"),
 	location: yup.string().required("required"),
 	occupation: yup.string().required("required"),
-	type: yup.string().required("required"),
 });
 
 const loginSchema = yup.object().shape({
@@ -46,7 +45,6 @@ const initialValuesRegister = {
 	password: "",
 	location: "",
 	occupation: "",
-	type: "STUDENT",
 };
 
 const initialValuesLogin = {
@@ -65,6 +63,12 @@ const Form = () => {
 	const isLogin = pageType === "login";
 	const isRegister = pageType === "register";
 
+	const [handle, setHandle] = useState('')
+
+	const handleSelect = event => {
+        setHandle(event.target.value);
+    };
+
 	const handleSelectType = (event) => {
 		setType(event.target.value);
 	};
@@ -77,6 +81,7 @@ const Form = () => {
 		for (let value in values) {
 			formData.append(value, values[value]);
 		}
+		formData.append('type', handle)
 		console.log(formData);
 
 		//sending post request
@@ -215,12 +220,8 @@ const Form = () => {
 									labelId="Select Type"
 									id="type"
 									name="type"
-									value={values.type}
-									onBlur={handleBlur}
-									onChange={
-										handleSelectType
-									}
-									defaultValue={"STUDENT"}
+									value={handle}
+									onChange={handleSelect}
 									label="Select Type"
 									sx={{
 										gridColumn:
