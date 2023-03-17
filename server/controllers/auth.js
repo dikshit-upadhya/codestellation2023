@@ -14,7 +14,8 @@ export const register = async(req, res) => {
             location,
             userType,
             occupation,
-        } = req.body 
+            type
+        } = req.body
 
         //encrypt password
         const salt = await bcrypt.genSalt()
@@ -31,6 +32,7 @@ export const register = async(req, res) => {
             userType: reqdType,
             verified: reqdType === 'ALUMNI' ? false : true,
             location,
+            type,
             occupation,
             viewedProfile: Math.floor(Math.random() * 10000),
             impressions: Math.floor(Math.random() * 10000)
@@ -48,12 +50,12 @@ export const login = async (req,res) => {
         const { email, password } = req.body
         const user = await User.findOne({ email: email }) 
 
-        if(!user) return res.status(400).json({ message: "User does not exist." })
-        
-        const isMatch = await bcrypt.compare(password, user.password)
-        if(!isMatch) return res.status(400).json({ message: "Invalid credentials" })
+        if (!user) return res.status(400).json({ message: "User does not exist." })
 
-        const token = jwt.sign({ id:user._id }, 'secret')
+        const isMatch = await bcrypt.compare(password, user.password)
+        if (!isMatch) return res.status(400).json({ message: "Invalid credentials" })
+
+        const token = jwt.sign({ id: user._id }, 'secret')
         delete user.password;
         res.status(200).json({ token, user })
     } catch (error) {
