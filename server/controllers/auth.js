@@ -7,7 +7,7 @@ import User from "../models/User.js" //mongoose model
 //req is the request body from the front end
 //res is what we are gonna be sending back to front end
 //express provides these by default
-export const register = async(req, res) => {
+export const register = async (req, res) => {
     try {
         //destructure parameters from req.body
         const {
@@ -19,7 +19,8 @@ export const register = async(req, res) => {
             friends,
             location,
             occupation,
-        } = req.body 
+            type
+        } = req.body
 
         //encrypt password
         const salt = await bcrypt.genSalt()
@@ -33,6 +34,7 @@ export const register = async(req, res) => {
             picturePath,
             friends,
             location,
+            type,
             occupation,
             viewedProfile: Math.floor(Math.random() * 10000),
             impressions: Math.floor(Math.random() * 10000)
@@ -48,17 +50,17 @@ export const register = async(req, res) => {
 
 /* Logging in */
 //from /auth/login
-export const login = async (req,res) => {
+export const login = async (req, res) => {
     try {
         const { email, password } = req.body
         const user = await User.findOne({ email: email }) //call to database
 
-        if(!user) return res.status(400).json({ message: "User does not exist." })
-        
-        const isMatch = await bcrypt.compare(password, user.password)
-        if(!isMatch) return res.status(400).json({ message: "Invalid credentials" })
+        if (!user) return res.status(400).json({ message: "User does not exist." })
 
-        const token = jwt.sign({ id:user._id }, 'secret')
+        const isMatch = await bcrypt.compare(password, user.password)
+        if (!isMatch) return res.status(400).json({ message: "Invalid credentials" })
+
+        const token = jwt.sign({ id: user._id }, 'secret')
         delete user.password;
         res.status(200).json({ token, user })
     } catch (error) {
