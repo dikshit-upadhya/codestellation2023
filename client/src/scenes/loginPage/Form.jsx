@@ -45,6 +45,7 @@ const initialValuesRegister = {
 	password: "",
 	location: "",
 	occupation: "",
+	type: "STUDENT",
 };
 
 const initialValuesLogin = {
@@ -213,10 +214,8 @@ const Form = () => {
 									labelId="Select Type"
 									id="type"
 									name="type"
-									value={type}
-									onChange={
-										handleSelectType
-									}
+									value={values.type}
+									onChange={handleChange}
 									defaultValue={"STUDENT"}
 									label="Select Type"
 									sx={{
