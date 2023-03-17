@@ -1,10 +1,10 @@
 import mongoose from 'mongoose'
 
 const noticeSchema = mongoose.Schema({
-    noticeId: {
+    createdBy: {
         type: String, 
         required: true
-    }, 
+    },
     title: {
         type: String, 
         required: true,
@@ -13,7 +13,10 @@ const noticeSchema = mongoose.Schema({
         type: String, 
         required: true
     }, 
-
+    verified: {
+        type: Boolean,
+        default: false
+    }
 }, {
     timestamps: true
 })

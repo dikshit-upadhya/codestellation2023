@@ -1,5 +1,11 @@
 import mongoose from "mongoose";
 
+const USER_ROLES = {
+    ADMIN: 'ADMIN', 
+    STUDENT: 'STUDENT', 
+    ALUMNI: 'ALUMNI'
+}
+
 const UserSchema = new mongoose.Schema(
     {
         firstName: {
@@ -33,9 +39,14 @@ const UserSchema = new mongoose.Schema(
             type: String,
             default: "",
         },
-        friends: {
-            type: Array,
-            default: [],
+        userType: {
+            default: USER_ROLES.STUDENT,
+            type: String, 
+            enum: USER_ROLES
+        },
+        verified: {
+            default: false,
+            type: Boolean,
         },
         location: String,
         occupation: String,

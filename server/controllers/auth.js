@@ -1,13 +1,8 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-import User from "../models/User.js" //mongoose model
+import User from "../models/User.js"
 
-/* Register User */
-//async because we need to call mongoDB
-//req is the request body from the front end
-//res is what we are gonna be sending back to front end
-//express provides these by default
-export const register = async (req, res) => {
+export const register = async(req, res) => {
     try {
         //destructure parameters from req.body
         const {
@@ -16,7 +11,6 @@ export const register = async (req, res) => {
             email,
             password,
             picturePath,
-            friends,
             location,
             occupation,
             type
@@ -26,13 +20,16 @@ export const register = async (req, res) => {
         const salt = await bcrypt.genSalt()
         const passwordHash = await bcrypt.hash(password, salt)
 
+        const reqdType = type || 'STUDENT'
+
         const newUser = new User({
             firstName,
             lastName,
             email,
             password: passwordHash,
             picturePath,
-            friends,
+            userType: reqdType,
+            verified: reqdType === 'ALUMNI' ? false : true,
             location,
             type,
             occupation,
@@ -43,17 +40,15 @@ export const register = async (req, res) => {
 
         res.status(201).json(savedUser)
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: error.message })
     }
 }
 
-
-/* Logging in */
-//from /auth/login
-export const login = async (req, res) => {
+export const login = async (req,res) => {
     try {
         const { email, password } = req.body
-        const user = await User.findOne({ email: email }) //call to database
+        const user = await User.findOne({ email: email }) 
 
         if (!user) return res.status(400).json({ message: "User does not exist." })
 
