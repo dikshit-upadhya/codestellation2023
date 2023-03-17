@@ -1,5 +1,5 @@
 import express from "express"
-import { getUser, getUserFriends, addRemoveFriend, getAllUsers } from "../controllers/users.js"
+import { getUser, getUserFriends, addRemoveFriend, getAllUsers, getAllUnverifiedUsers, verifyUser } from "../controllers/users.js"
 import { acceptedRoles, verifyToken } from "../middleware/auth.js"
 
 const router = express.Router()
@@ -12,8 +12,9 @@ router.get("/:id", verifyToken, getUser)
 router.get("/:id/friends", verifyToken, getUserFriends)
 
 
-// router.get('/unverified', verifyToken, acceptedRoles(['ADMIN']), )
+router.get('/unverified', verifyToken, acceptedRoles(['ADMIN']), getAllUnverifiedUsers)
 /* UPDATE */
 router.patch("/:id/:friendId", verifyToken, addRemoveFriend)
+router.patch("/verify-user/:userId", verifyToken, acceptedRoles(['ADMIN']), verifyUser)
 
 export default router;
