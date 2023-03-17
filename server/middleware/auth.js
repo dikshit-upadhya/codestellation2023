@@ -21,3 +21,14 @@ export const verifyToken = async (req, res, next) => {
         res.status(500).json({ error: error.message })
     }
 }
+
+export const acceptedRoles = (validRoles) => async (req, res, next) => {
+	try {
+		if (validRoles.includes(req.user.role)) {
+			return next()
+		}
+		res.status(403).json({message: 'This action is forbidden for you'})
+	} catch (err) {
+		res.status(500).json({message:'Something went wrong! Please try again!'})
+	}
+}

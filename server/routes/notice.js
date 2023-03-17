@@ -5,7 +5,7 @@ import { verifyToken } from "../middleware/auth.js"
 const router = express.Router()
 
 /* READ */
-router.get("/notice/all", getAllNotice)
-router.post("/notice", createNotice)
+router.get("/notice/all", verifyToken,  getAllNotice)
+router.post("/notice", verifyToken, acceptedRoles(['ALUMNI', 'ADMIN']),  createNotice)
 
 export default router
