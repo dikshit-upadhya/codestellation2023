@@ -215,7 +215,10 @@ const Form = () => {
 									id="type"
 									name="type"
 									value={values.type}
-									onChange={handleChange}
+									onBlur={handleBlur}
+									onChange={
+										handleSelectType
+									}
 									defaultValue={"STUDENT"}
 									label="Select Type"
 									sx={{
