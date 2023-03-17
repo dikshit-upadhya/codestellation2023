@@ -12,7 +12,6 @@ export const register = async(req, res) => {
             password,
             picturePath,
             location,
-            userType,
             occupation,
             type
         } = req.body
@@ -21,7 +20,7 @@ export const register = async(req, res) => {
         const salt = await bcrypt.genSalt()
         const passwordHash = await bcrypt.hash(password, salt)
 
-        const reqdType = userType || 'STUDENT'
+        const reqdType = type || 'STUDENT'
 
         const newUser = new User({
             firstName,
@@ -41,6 +40,7 @@ export const register = async(req, res) => {
 
         res.status(201).json(savedUser)
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error: error.message })
     }
 }
